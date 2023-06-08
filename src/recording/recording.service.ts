@@ -22,7 +22,6 @@ export class RecordingService {
     const recordingData: Prisma.SessionCreateInput = {
       ...createRecordingDto,
     };
-    console.log('HHHHHHHHHHHHHHHHHHHH');
     return this.prisma.getPrisma().session.create({ data: recordingData });
   }
 
