@@ -16,7 +16,7 @@ import { JwtAuthGuard } from '../auth/jwt-auth.guard';
 import { from } from 'rxjs';
 
 @Controller('recordings')
-@UseGuards(JwtAuthGuard)
+// @UseGuards(JwtAuthGuard)
 export class RecordingController {
   constructor(private readonly recordingService: RecordingService) {}
 
