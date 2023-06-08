@@ -7,11 +7,13 @@ import { PrismaService } from 'prisma/prisma.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
+import { S3Module } from './s3/s3.module';
 
 @Module({
   imports: [
     ConfigModule.forRoot({
       isGlobal: true,
+      envFilePath: '.env',
     }),
     ServeStaticModule.forRoot({
       rootPath: join(__dirname, '..', 'public', 'uploads'),
@@ -22,6 +24,7 @@ import { join } from 'path';
     }),
     RecordingModule,
     AuthModule,
+    S3Module,
   ],
   controllers: [AppController],
   providers: [AppService, PrismaService],

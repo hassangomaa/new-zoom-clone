@@ -6,11 +6,15 @@ import {
   Put,
   Delete,
   Body,
+  UploadedFile,
+  UseInterceptors,
 } from '@nestjs/common';
 import { RecordingService } from './recording.service';
 import { CreateSessionDto } from './dto/create-recording.dto';
 import { UpdateSessionDto } from './dto/update-recording.dto';
 import { Session } from '@prisma/client';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { Multer } from 'multer';
 
 @Controller('recordings')
 export class RecordingController {
@@ -26,11 +30,25 @@ export class RecordingController {
     return this.recordingService.getRecordingById(Number(id));
   }
 
+  // @Post()
+  // createRecording(
+  //   @Body() createRecordingDto: CreateSessionDto,
+  // ): Promise<Session> {
+  //   return this.recordingService.createRecording(createRecordingDto);
+  // }
+
   @Post()
+  @UseInterceptors(FileInterceptor('file'))
   createRecording(
     @Body() createRecordingDto: CreateSessionDto,
+    @UploadedFile() file: Express.Multer.File,
   ): Promise<Session> {
-    return this.recordingService.createRecording(createRecordingDto);
+    const { originalname, buffer } = file;
+    return this.recordingService.createRecording(
+      createRecordingDto,
+      buffer,
+      originalname,
+    );
   }
 
   @Put(':id')
