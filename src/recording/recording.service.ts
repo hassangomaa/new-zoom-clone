@@ -3,7 +3,6 @@ import { Prisma, Session } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateSessionDto } from './dto/create-recording.dto';
 import { UpdateSessionDto } from './dto/update-recording.dto';
-import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class RecordingService {

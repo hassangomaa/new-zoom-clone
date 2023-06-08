@@ -3,43 +3,49 @@ import {
   Get,
   Param,
   Post,
-  Body,
   Put,
   Delete,
+  Body,
 } from '@nestjs/common';
 import { RecordingService } from './recording.service';
 import { CreateSessionDto } from './dto/create-recording.dto';
 import { UpdateSessionDto } from './dto/update-recording.dto';
+import { Session } from '@prisma/client';
 
 @Controller('recordings')
 export class RecordingController {
   constructor(private readonly recordingService: RecordingService) {}
 
   @Get()
-  getAllRecordings() {
+  getAllRecordings(): Promise<Session[]> {
     return this.recordingService.getAllRecordings();
   }
 
   @Get(':id')
-  getRecordingById(@Param('id') id: number) {
-    return this.recordingService.getRecordingById(id);
+  getRecordingById(@Param('id') id: string): Promise<Session | null> {
+    return this.recordingService.getRecordingById(Number(id));
   }
 
   @Post()
-  createRecording(@Body() createRecordingDto: CreateSessionDto) {
+  createRecording(
+    @Body() createRecordingDto: CreateSessionDto,
+  ): Promise<Session> {
     return this.recordingService.createRecording(createRecordingDto);
   }
 
   @Put(':id')
   updateRecording(
-    @Param('id') id: number,
+    @Param('id') id: string,
     @Body() updateRecordingDto: UpdateSessionDto,
-  ) {
-    return this.recordingService.updateRecording(id, updateRecordingDto);
+  ): Promise<Session | null> {
+    return this.recordingService.updateRecording(
+      Number(id),
+      updateRecordingDto,
+    );
   }
 
   @Delete(':id')
-  deleteRecording(@Param('id') id: number) {
-    return this.recordingService.deleteRecording(id);
+  deleteRecording(@Param('id') id: string): Promise<Session | null> {
+    return this.recordingService.deleteRecording(Number(id));
   }
 }

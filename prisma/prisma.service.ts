@@ -1,5 +1,5 @@
 import { Injectable } from '@nestjs/common';
-import { PrismaClient } from '@prisma/client';
+import { PrismaClient, Session } from '@prisma/client';
 
 @Injectable()
 export class PrismaService {
@@ -19,3 +19,5 @@ export class PrismaService {
     return this.prisma;
   }
 }
+
+export { Session };
