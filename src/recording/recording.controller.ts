@@ -6,17 +6,12 @@ import {
   Body,
   Put,
   Delete,
-  UseGuards,
 } from '@nestjs/common';
 import { RecordingService } from './recording.service';
 import { CreateSessionDto } from './dto/create-recording.dto';
 import { UpdateSessionDto } from './dto/update-recording.dto';
 
-import { JwtAuthGuard } from '../auth/jwt-auth.guard';
-import { from } from 'rxjs';
-
 @Controller('recordings')
-// @UseGuards(JwtAuthGuard)
 export class RecordingController {
   constructor(private readonly recordingService: RecordingService) {}
 

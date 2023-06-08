@@ -3,7 +3,7 @@ import { Prisma, Session } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateSessionDto } from './dto/create-recording.dto';
 import { UpdateSessionDto } from './dto/update-recording.dto';
-
+import { PrismaClient } from '@prisma/client';
 
 @Injectable()
 export class RecordingService {
@@ -11,7 +11,7 @@ export class RecordingService {
 
   async getAllRecordings(): Promise<Session[]> {
     return this.prisma.getPrisma().session.findMany();
-    }
+  }
 
   async getRecordingById(id: number): Promise<Session | null> {
     return this.prisma.getPrisma().session.findUnique({ where: { id } });
@@ -23,6 +23,7 @@ export class RecordingService {
     const recordingData: Prisma.SessionCreateInput = {
       ...createRecordingDto,
     };
+    console.log('HHHHHHHHHHHHHHHHHHHH');
     return this.prisma.getPrisma().session.create({ data: recordingData });
   }
 
