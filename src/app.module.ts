@@ -9,6 +9,9 @@ import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { S3Module } from './s3/s3.module';
 import { MulterModule } from '@nestjs/platform-express';
+import { UserController } from './user/user.controller';
+import { UserModule } from './user/user.module';
+import { CustomConfigModule } from 'src/config/config.module';
 
 
 @Module({
@@ -30,8 +33,10 @@ import { MulterModule } from '@nestjs/platform-express';
     RecordingModule,
     AuthModule,
     S3Module,
+    UserModule,
+    CustomConfigModule
   ],
-  controllers: [AppController],
+  controllers: [AppController, UserController],
   providers: [AppService, PrismaService],
 })
 export class AppModule {}

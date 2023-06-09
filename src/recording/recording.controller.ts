@@ -17,6 +17,7 @@ import { Session } from '@prisma/client';
 import { S3Service } from '../s3/s3.service';
 
 @Controller('recordings')
+// @UseGuards(JwtAuthGuard) // Apply JwtAuthGuard to secure the routes
 export class RecordingController {
   constructor(
     private readonly recordingService: RecordingService,
