@@ -2,17 +2,16 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { RecordingModule } from './recording/recording.module';
-import { AuthModule } from './auth/auth.module';
+// import { AuthModule } from './auth/auth.module';
 import { PrismaService } from 'prisma/prisma.service';
 import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { S3Module } from './s3/s3.module';
 import { MulterModule } from '@nestjs/platform-express';
-import { UserController } from './user/user.controller';
-import { UserModule } from './user/user.module';
+// import { UserController } from './user/user.controller';
+// import { UserModule } from './user/user.module';
 import { CustomConfigModule } from 'src/config/config.module';
-
 
 @Module({
   imports: [
@@ -31,12 +30,15 @@ import { CustomConfigModule } from 'src/config/config.module';
       rootPath: join(__dirname, '..', 'public', 'views'),
     }),
     RecordingModule,
-    AuthModule,
+    // AuthModule,
     S3Module,
-    UserModule,
-    CustomConfigModule
+    // UserModule,
+    CustomConfigModule,
   ],
-  controllers: [AppController, UserController],
+  controllers: [
+    AppController,
+    // UserController
+  ],
   providers: [AppService, PrismaService],
 })
 export class AppModule {}
