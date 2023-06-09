@@ -29,6 +29,7 @@
     "@nestjs/platform-express": "^9.0.0",
     "@nestjs/serve-static": "^3.0.1",
     "@prisma/client": "^4.15.0",
+    "@types/multer": "^1.4.7",
     "aws-sdk": "^2.1394.0",
     "bcrypt": "^5.1.0",
     "class-validator": "^0.14.0",

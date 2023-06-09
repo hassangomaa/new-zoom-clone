@@ -9,16 +9,19 @@ import {
   UploadedFile,
   UseInterceptors,
 } from '@nestjs/common';
+import { FileInterceptor } from '@nestjs/platform-express';
 import { RecordingService } from './recording.service';
 import { CreateSessionDto } from './dto/create-recording.dto';
 import { UpdateSessionDto } from './dto/update-recording.dto';
 import { Session } from '@prisma/client';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { Multer } from 'multer';
+import { S3Service } from '../s3/s3.service';
 
 @Controller('recordings')
 export class RecordingController {
-  constructor(private readonly recordingService: RecordingService) {}
+  constructor(
+    private readonly recordingService: RecordingService,
+    private readonly s3Service: S3Service,
+  ) {}
 
   @Get()
   getAllRecordings(): Promise<Session[]> {
@@ -30,25 +33,13 @@ export class RecordingController {
     return this.recordingService.getRecordingById(Number(id));
   }
 
-  // @Post()
-  // createRecording(
-  //   @Body() createRecordingDto: CreateSessionDto,
-  // ): Promise<Session> {
-  //   return this.recordingService.createRecording(createRecordingDto);
-  // }
-
   @Post()
   @UseInterceptors(FileInterceptor('file'))
   createRecording(
     @Body() createRecordingDto: CreateSessionDto,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<Session> {
-    const { originalname, buffer } = file;
-    return this.recordingService.createRecording(
-      createRecordingDto,
-      buffer,
-      originalname,
-    );
+    return this.recordingService.createRecording(createRecordingDto, file);
   }
 
   @Put(':id')

@@ -8,9 +8,14 @@ import { ServeStaticModule } from '@nestjs/serve-static';
 import { ConfigModule } from '@nestjs/config';
 import { join } from 'path';
 import { S3Module } from './s3/s3.module';
+import { MulterModule } from '@nestjs/platform-express';
+
 
 @Module({
   imports: [
+    MulterModule.register({
+      dest: './uploads', // Specify the destination folder to store the uploaded files
+    }),
     ConfigModule.forRoot({
       isGlobal: true,
       envFilePath: '.env',

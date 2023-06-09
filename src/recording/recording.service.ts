@@ -20,28 +20,16 @@ export class RecordingService {
     return this.prisma.getPrisma().session.findUnique({ where: { id } });
   }
 
-  // async createRecording(
-  //   createRecordingDto: CreateSessionDto,
-  // ): Promise<Session> {
-  //   const recordingData: Prisma.SessionCreateInput = {
-  //     ...createRecordingDto,
-  //   };
-  //   return this.prisma.getPrisma().session.create({ data: recordingData });
-  // }
-
   async createRecording(
     createRecordingDto: CreateSessionDto,
-    file: Buffer,
-    fileName: string,
+    file: Express.Multer.File,
   ): Promise<Session> {
+    const { originalname, buffer } = file;
+    const fileUrl = await this.s3Service.uploadFile(file);
     const recordingData: Prisma.SessionCreateInput = {
       ...createRecordingDto,
+      fileUrl,
     };
-
-    const fileUrl = await this.s3Service.uploadFile(file, fileName);
-
-    recordingData.fileUrl = fileUrl;
-
     return this.prisma.getPrisma().session.create({ data: recordingData });
   }
 
