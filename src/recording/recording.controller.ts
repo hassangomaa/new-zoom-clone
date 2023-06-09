@@ -35,11 +35,22 @@ export class RecordingController {
 
   @Post()
   @UseInterceptors(FileInterceptor('file'))
-  createRecording(
+  async createRecording(
     @Body() createRecordingDto: CreateSessionDto,
     @UploadedFile() file: Express.Multer.File,
   ): Promise<Session> {
-    return this.recordingService.createRecording(createRecordingDto, file);
+    const { originalname, buffer } = file;
+    const fileUrl = await this.s3Service.uploadFile(file);
+
+    const recordingData: any = {
+      ...createRecordingDto,
+      fileUrl,
+      name: 'Recording Name', // Provide a name for the recording
+      startTime: new Date(), // Provide the start time of the recording
+      endTime: new Date(), // Provide the end time of the recording
+    };
+
+    return this.recordingService.createRecording(recordingData, file);
   }
 
   @Put(':id')
