@@ -18,6 +18,7 @@ model Session {
   name      String
   startTime DateTime
   endTime   DateTime
+  fileUrl   String?
 }
 
 

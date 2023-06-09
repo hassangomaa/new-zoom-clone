@@ -1,15 +1,39 @@
-import { Injectable } from '@nestjs/common';
-import { JwtService } from '@nestjs/jwt';
-import { Constants } from './constants';
-import { PrismaClient } from '@prisma/client';
+// // auth/auth.service.ts
 
-@Injectable()
-export class AuthService {
-  constructor(private readonly jwtService: JwtService) {}
+// import { Injectable, UnauthorizedException } from '@nestjs/common';
+// import { JwtService } from '@nestjs/jwt';
+// import { UserService } from '../user/user.service';
+// import { User } from '.prisma/client';
 
-  async createToken(payload: any): Promise<string> {
-    return this.jwtService.sign(payload, { secret: Constants.JWT_SECRET });
-  }
+// @Injectable()
+// export class AuthService {
+//   constructor(
+//     private readonly userService: UserService,
+//     private readonly jwtService: JwtService,
+//   ) {}
 
-  // Other authentication-related methods
-}
+//   async validateUserByEmailAndPassword(
+//     email: string,
+//     password: string,
+//   ): Promise<User | null> {
+//     const user = await this.userService.findByEmail(email);
+
+//     if (user && user.password === password) {
+//       return user;
+//     }
+
+//     return null;
+//   }
+
+//   async login(user: User): Promise<{ accessToken: string }> {
+//     const payload = { email: user.email, sub: user.id };
+
+//     return {
+//       accessToken: this.jwtService.sign(payload),
+//     };
+//   }
+
+//   async validateUserById(userId: number): Promise<User | null> {
+//     return this.userService.findById(userId);
+//   }
+// }

@@ -3,10 +3,14 @@ import { Prisma, Session } from '@prisma/client';
 import { PrismaService } from '../../prisma/prisma.service';
 import { CreateSessionDto } from './dto/create-recording.dto';
 import { UpdateSessionDto } from './dto/update-recording.dto';
+import { S3Service } from '../s3/s3.service';
 
 @Injectable()
 export class RecordingService {
-  constructor(private readonly prisma: PrismaService) {}
+  constructor(
+    private readonly prisma: PrismaService,
+    private readonly s3Service: S3Service,
+  ) {}
 
   async getAllRecordings(): Promise<Session[]> {
     return this.prisma.getPrisma().session.findMany();
@@ -18,11 +22,14 @@ export class RecordingService {
 
   async createRecording(
     createRecordingDto: CreateSessionDto,
+    file: Express.Multer.File,
   ): Promise<Session> {
+    const { originalname, buffer } = file;
+    const fileUrl = await this.s3Service.uploadFile(file);
     const recordingData: Prisma.SessionCreateInput = {
       ...createRecordingDto,
+      fileUrl,
     };
-    console.log('HHHHHHHHHHHHHHHHHHHH');
     return this.prisma.getPrisma().session.create({ data: recordingData });
   }
 

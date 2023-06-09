@@ -1,0 +1,13 @@
+{
+  "folders": [
+	{
+		"name": "new-zoom-clone",
+		"path": "../.."
+	},
+	{
+		"name": "public",
+		"path": "../../../La-vie-backend/public"
+	}
+],
+  "settings": {}
+}

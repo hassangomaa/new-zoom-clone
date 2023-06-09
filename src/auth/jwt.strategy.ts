@@ -1,19 +1,25 @@
-import { Injectable } from '@nestjs/common';
-import { PassportStrategy } from '@nestjs/passport';
-import { Strategy, ExtractJwt } from 'passport-jwt';
-import { Constants } from './constants';
+// // auth/strategies/jwt.strategy.ts
 
-@Injectable()
-export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor() {
-    super({
-      jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
-      ignoreExpiration: false,
-      secretOrKey: Constants.JWT_SECRET,
-    });
-  }
+// import { Injectable, UnauthorizedException } from '@nestjs/common';
+// import { PassportStrategy } from '@nestjs/passport';
+// import { Strategy, ExtractJwt } from 'passport-jwt';
+// import { ConfigService } from '@nestjs/config';
+// import { JwtPayload } from './interfaces/jwt-payload.interface';
+// import { AuthService } from './auth.service';
 
-  async validate(payload: any): Promise<any> {
-    return { userId: payload.sub, username: payload.username };
-  }
-}
+// @Injectable()
+// export class JwtStrategy extends PassportStrategy(Strategy) {
+//   constructor(
+//     private readonly authService: AuthService,
+//     private readonly configService: ConfigService,
+//   ) {
+//     super({
+//       jwtFromRequest: ExtractJwt.fromAuthHeaderAsBearerToken(),
+//       secretOrKey: configService.get('jwt.secret'),
+//     });
+//   }
+
+//   async validate(payload: JwtPayload): Promise<any> {
+//     return this.authService.validateUserById(payload.sub);
+//   }
+// }
